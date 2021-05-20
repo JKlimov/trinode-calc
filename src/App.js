@@ -108,7 +108,8 @@ const App = () => {
     console.error("Unit test failed");
   }
 
-  const inputNodes = [[1,3,5], [6,3,5], [4,1,2], [5,1,4], [2,5,3], [1,2,3], [1,6,3], [2,4,3], [6,4,1]];
+  const inputNodes = [[1,3,5], [6,3,5], [4,1,2], [5,1,4], [2,5,3], [1,2,3], [1,6,3], [2,4,3]];
+  //const inputNodes = [[1,3,5], [6,3,5], [4,1,2], [5,1,4], [2,5,3], [1,2,3], [1,6,3], [2,4,3], [6,4,1]];
   const solutionNodes = findSolution(inputNodes);
 
   // Check if a solution already exists within the input
@@ -118,7 +119,24 @@ const App = () => {
     if (inputNodes.some(inputNode => ))
   })*/
 
-  console.log(countFirstSkills(solutionNodes));
+  const firstSkillCounts = countFirstSkills(solutionNodes);
+
+  // Create a list of skills that occur the maximum number of times
+  let mostCommonNodes = [];
+
+  firstSkillCounts.forEach((count, index) => {
+    // Math.max() takes a list of arguments rather than an array, so we use spread syntax
+    if (count == Math.max(...firstSkillCounts)) {
+      mostCommonNodes.push(index + 1);
+    }
+  })
+
+  // Output solution
+  if (mostCommonNodes.length == 1) {
+    console.log("Craft node " + mostCommonNodes[0] + ".");
+  } else {
+    console.log("Craft any of these nodes: " + mostCommonNodes + ".");
+  }
 
   const trinodeList = solutionNodes.map((trinode) =>
     <li>{trinode}</li>
