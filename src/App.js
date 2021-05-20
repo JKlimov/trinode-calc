@@ -4,7 +4,7 @@ import './App.css';
 import { Button } from '@material-ui/core';
 
 // Find all sets of 3 trinodes, check if each set has a solution, and add all solutions to a list
-function checkNodes(trinodes) {
+function findSolution(trinodes) {
   let solutionNodes = [];
 
   if (trinodes.length < 3) {
@@ -83,30 +83,48 @@ function permuteArray(input) {
   return res;
 }
 
+// Counts how many times each first skill occurs within a set of trinodes
 function countFirstSkills(trinodes) {
-
+  // Array for counting number of occurrences of each skill
+  let skillCounts = [0, 0, 0, 0, 0, 0];
+  // Count how many times each first (leftmost) skill appears
+  // trinode[0] is the first skill number (1-6); subtract 1 to fit into array index (0-5)
+  trinodes.forEach(trinode => 
+    skillCounts[trinode[0] - 1]++
+  );
+  return skillCounts;
 }
 
 const App = () => {
-
   // Unit test
   const testNodes = [[1,3,5], [6,3,5], [4,1,2], [5,1,4], [2,5,3], [1,2,3], [1,6,3]];
-  const expectedOutput = [[2,4,6], [2,6,4], [2,3,6], [2,6,3], [3,2,6], 
-  [3,6,2], [1,4,6], [1,6,4], [5,4,6], [5,6,4], [2,4,5], 
-  [2,5,4], [5,2,4], [5,4,2], [4,2,6], [4,6,2], [6,4,5], 
-  [6,5,4], [6,2,4], [6,4,2]];
+  const expectedSolution = 
+    [[2,4,6], [2,6,4], [2,3,6], [2,6,3], [3,2,6], 
+    [3,6,2], [1,4,6], [1,6,4], [5,4,6], [5,6,4], 
+    [2,4,5], [2,5,4], [5,2,4], [5,4,2], [4,2,6], 
+    [4,6,2], [6,4,5], [6,5,4], [6,2,4], [6,4,2]];
 
-  if (JSON.stringify(checkNodes(testNodes)) !== JSON.stringify(expectedOutput)) {
+  if (JSON.stringify(findSolution(testNodes)) !== JSON.stringify(expectedSolution)) {
     console.error("Unit test failed");
   }
 
-  const trinodes = [[1,3,5], [6,3,5], [4,1,2], [5,1,4], [2,5,3], [1,2,3], [1,6,3], [2,4,3], [6,4,1]];
+  const inputNodes = [[1,3,5], [6,3,5], [4,1,2], [5,1,4], [2,5,3], [1,2,3], [1,6,3], [2,4,3], [6,4,1]];
+  const solutionNodes = findSolution(inputNodes);
 
-  const trinodeList = checkNodes(trinodes).map((trinode) =>
+  // Check if a solution already exists within the input
+  // findSolution should also return which nodes were used to form a solution
+  // If a solution node is found in the input nodes, look up the other three nodes that were used to form that solution
+  /*solutionNodes.forEach(solutionNode => {
+    if (inputNodes.some(inputNode => ))
+  })*/
+
+  console.log(countFirstSkills(solutionNodes));
+
+  const trinodeList = solutionNodes.map((trinode) =>
     <li>{trinode}</li>
   );
 
-  // Check if a solution already exists
+
 
   return (
     <div>
