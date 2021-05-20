@@ -83,13 +83,30 @@ function permuteArray(input) {
   return res;
 }
 
+function countFirstSkills(trinodes) {
+
+}
+
 const App = () => {
 
-  const trinodes = [[1,3,5], [6,3,5], [4,1,2], [5,1,4], [2,5,3], [1,2,3], [1,6,3]];
+  // Unit test
+  const testNodes = [[1,3,5], [6,3,5], [4,1,2], [5,1,4], [2,5,3], [1,2,3], [1,6,3]];
+  const expectedOutput = [[2,4,6], [2,6,4], [2,3,6], [2,6,3], [3,2,6], 
+  [3,6,2], [1,4,6], [1,6,4], [5,4,6], [5,6,4], [2,4,5], 
+  [2,5,4], [5,2,4], [5,4,2], [4,2,6], [4,6,2], [6,4,5], 
+  [6,5,4], [6,2,4], [6,4,2]];
+
+  if (JSON.stringify(checkNodes(testNodes)) !== JSON.stringify(expectedOutput)) {
+    console.error("Unit test failed");
+  }
+
+  const trinodes = [[1,3,5], [6,3,5], [4,1,2], [5,1,4], [2,5,3], [1,2,3], [1,6,3], [2,4,3], [6,4,1]];
 
   const trinodeList = checkNodes(trinodes).map((trinode) =>
     <li>{trinode}</li>
   );
+
+  // Check if a solution already exists
 
   return (
     <div>
